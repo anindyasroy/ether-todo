@@ -8,6 +8,7 @@ function Todo() {
   const [chainName, setChainName] = useState(null);
   const [balance, setBalance] = useState(null);
   const [blockNumber, setBlockNumber] = useState(null);
+  const [totalTasks, settotalTasks] = useState(null);
 
   const getWalletAddress = async () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -44,7 +45,8 @@ function Todo() {
       signer
     );
 
-    await contract.completeTask(3);
+    await contract.createTask("Task1");
+    settotalTasks(await contract.totalTasks());
   };
   useEffect(() => {
     getData();
@@ -53,7 +55,7 @@ function Todo() {
   return (
     <div>
       <button onClick={getData}> Click Me</button>
-      <p> Total number of Tasks : </p>
+      <p> Total number of Tasks : {totalTasks}</p>
       <button onClick={getWalletAddress}> Click Me</button>
       <p>{currentAccount}</p>
       <p> Chain Id: {chainId} </p>
